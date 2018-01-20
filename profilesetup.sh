@@ -55,7 +55,7 @@ if [ -f "$HOME/.profile" ]; then
 #    mv "$HOME/.profile" "$HOME/.profile.bak"
     printf "%s\n" "  '.profile' exists, moving to '.profile.bak'"
 fi
-dot_profile='--
+dot_profile=$(cat<<'EOF'
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
@@ -77,20 +77,22 @@ fi
 # Add user Scripts directory to PATH if it exists
 if [ -d "$HOME/Scripts" ] ; then
     PATH="$HOME/Scripts:$PATH"
-fi'
+fi
+EOF
+)
 
-dot_profile=$(echo "${dot_profile}" | sed '/^--$/d')
 #echo "${dot_profile}" > "$HOME/.profile"
 echo "  ..Done"
 
 
 textBold;textColor 34
 echo "Setting Up .nanorc"
-dot_nanorc='--
+dot_nanorc=$(cat<<'EOF'
 set const
 set tabstospaces
 set tabsize 4'
-dot_nanorc=$(echo "${dot_nanorc}" | sed '/^--$/d')
+EOF
+)
 
 if [ -f "$HOME/.nanorc" ]; then
 #    echo "${dot_nanorc}" > "$HOME/.nanorc_alt"
@@ -106,8 +108,6 @@ fi
 
 
 textReset
-
-
 
 exit
 textBold;textColor 34
